@@ -33,11 +33,11 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
   },
   {
     "revision": "c54bccd97fc4d78c4033249f43b64c80",
-    "url": "/img/logo100.c54bccd9.png"
+    "url": "/student-association-stankin/img/logo100.c54bccd9.png"
   },
   {
     "revision": "a67700c0e80752725ecee965f378943a",
-    "url": "/img/main-page-banner.a67700c0.jpg"
+    "url": "/student-association-stankin/img/main-page-banner.a67700c0.jpg"
   },
   {
     "revision": "8248124a0ad6d447ff8fd5467546544f",
