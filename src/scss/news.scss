@@ -1,0 +1,96 @@
+.news-block {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    &_item {
+        position: relative;
+        display: block;
+        width: 30%;
+        margin-bottom: 40px;
+        padding: 30px;
+        background-color: #ffffff;
+        border-radius: 30px;
+        overflow: hidden;
+        text-decoration: none;
+        transition: .3s;
+
+        @media (max-width: 1150px) {
+            width: 48%;
+        }
+        @media (max-width: 790px) {
+            width: 100%;
+            border-radius: 10px;
+        }
+
+        &:hover {
+            transform: translateY(-20px);
+            box-shadow: 0px 20px 30px #00000011;
+
+            .news-block_itemImage {
+                filter: grayscale(1);
+
+                &::before {
+                    opacity: 1;
+                    transform: translateY(0px);
+                }
+            }
+        }
+
+        &Image {
+            position: relative;
+            display: block;
+            width: calc(100% + 60px);
+            height: 200px;
+            margin: -30px -30px 30px -30px;
+            background-color: #cccccc;
+
+            transition: filter .3s;
+
+            &::before {
+                content: 'Читать';
+                position: absolute;
+                width: 100%;
+                text-align: center;
+                left: 0px;
+                top: 90px;
+                text-decoration: underline;
+                font-size: 18px;
+                color: #ffffff;
+                opacity: 0;
+                transform: translateY(40px);
+                transition: .3s;
+            }
+        }
+
+        &Date {
+            position: absolute;
+            top: 175px;
+            padding: 15px;
+            background-color: #5DBCE4;
+            color: #ffffff;
+            border-radius: 40px;
+        }
+
+        &Text {
+            font-family: Roboto;
+            font-weight: 400;
+            height: 60px;
+            overflow: hidden;
+            position: relative;
+
+            &::after {
+                content: '';
+                position: absolute;
+                width: 100%;
+                height: 30px;
+                bottom: 0px;
+                left: 0px;
+                background: linear-gradient(#ffffff00, #ffffffcc, #ffffff);
+            }
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}

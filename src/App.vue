@@ -1,32 +1,99 @@
 <template>
   <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+    <header class="header">
+      <button type="button"
+              class="menuButton"
+              title="Главное меню"
+              @click="menuState = !menuState" />
+
+      <router-link class="logo"
+                   to="/"
+                   name="На главную">
+        <img src="./assets/logo100.png"
+             alt="Логотип" />
+      </router-link>
+
+      <a class="link header_link"
+         href="https://stankin.ru"
+         target="_blank"
+         name='Официальный сайт МГТУ "Станкин"'
+         title='Перейти к официальному сайту МГТУ "Станкин"'>
+        Официальный сайт МГТУ "Станкин"
+      </a>
+    </header>
+
+    <main class="main-container"
+          ref="scrollingContent"
+          @scroll="pageScroll">
+      <transition name="fade">
+        <router-view />
+      </transition>
+    </main>
+
+    <div class="toTopButton"
+         ref="scrollToTopButton"
+         @click="scrollToTop">
+      На верх
     </div>
-    <router-view/>
+    
+    <Menu :state="menuState"
+          @close="menuState = false" />
   </div>
 </template>
 
-<style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-}
+<script>
+import Menu from './components/menu';
+export default {
+  components: {
+    Menu
+  },
+  data () {
+    return {
+      menuState: false
+    }
+  },
 
-#nav {
-  padding: 30px;
+  methods: {
+    pageScroll() {
+      if (this.$refs.scrollingContent.scrollTop > 600)
+      {
+        this.$refs.scrollToTopButton.style.display = 'block';
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+        const timeout = setTimeout(() => {
+          this.$refs.scrollToTopButton.style.opacity = 1;
 
-    &.router-link-exact-active {
-      color: #42b983;
+          clearTimeout(timeout);
+        }, 100);
+      }
+      else {
+        this.$refs.scrollToTopButton.style.opacity = 0;
+          
+        const timeout = setTimeout(() => {
+          this.$refs.scrollToTopButton.style.display = 'none';
+
+          clearTimeout(timeout);
+        }, 300);
+      }
+    },
+    scrollToTop () {
+      const timer = setInterval(()=>{
+        if (this.$refs.scrollingContent.scrollTop > 20) {
+          this.$refs.scrollingContent.scrollTop -= 20;
+        }
+        else {
+          this.$refs.scrollingContent.scrollTop = 0;
+          clearInterval(timer);
+
+          this.$refs.scrollToTopButton.style.opacity = 0;
+            
+          const timeout = setTimeout(() => {
+            this.$refs.scrollToTopButton.style.display = 'none';
+
+            clearTimeout(timeout);
+          }, 300);
+        }
+      }, 1);
     }
   }
 }
-</style>
+</script>
