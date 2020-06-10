@@ -8,7 +8,8 @@
 
       <router-link class="logo"
                    to="/"
-                   name="На главную">
+                   name="На главную"
+                   title="На главную">
         <img src="./assets/logo100.png"
              alt="Логотип" />
       </router-link>
@@ -22,13 +23,20 @@
       </a>
     </header>
 
-    <main class="main-container"
+    <main :class="'main-container' + ($store.getters.getSiteDataReadyState ? '' : ' main-container__hidden')"
           ref="scrollingContent"
           @scroll="pageScroll">
       <transition name="fade">
-        <router-view />
+        <router-view class="main-content" :key="$route.path" />
       </transition>
     </main>
+
+    <div :class="'wp-page_loading' + (!$store.getters.getSiteDataReadyState ? ' wp-page_loading__shown' : '')"
+          ref="loading"
+          v-if="loadingShown">
+        <p class="wp-page_loading-text">Загрузка...</p>
+        <div class="preloader" />
+    </div>
 
     <div class="toTopButton"
          ref="scrollToTopButton"
@@ -49,7 +57,9 @@ export default {
   },
   data () {
     return {
-      menuState: false
+      loadingShown: true,
+      menuState: false,
+      lastUrl: window.location.href
     }
   },
 
@@ -94,6 +104,23 @@ export default {
         }
       }, 1);
     }
+  },
+  updated () {
+    if (window.location.href != this.lastUrl){
+      this.scrollToTop();
+      this.lastUrl = window.location.href;
+    }
+
+    if (this.$store.getters.getSiteDataReadyState) {
+      setTimeout(()=>{
+        this.loadingShown = false;
+      }, 1000);
+    }
+  },
+
+  beforeCreate () {
+    this.$store.dispatch('getMenuItems');
+    this.$store.dispatch('loadSiteData');
   }
 }
 </script>

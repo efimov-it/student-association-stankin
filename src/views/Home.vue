@@ -4,18 +4,10 @@
          @mousemove="particlesMoving">
       <div class="home_content">
         <h2 class="content-title">
-          АССОЦИАЦИЯ ВЫПУСКНИКОВ МГТУ «СТАНКИН»
+          {{$store.getters.getSiteName}}
         </h2>
 
-        <p class="home_contentText">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Nulla id elit et enim pharetra sodales. Donec vitae efficitur arcu.
-          In pharetra consectetur erat et faucibus. Suspendisse ut lorem
-          eleifend, volutpat nisi vel, eleifend enim. Duis sed nibh nisl.
-          Ut vehicula elit vitae enim aliquet, at tristique leo rhoncus.
-          Morbi viverra erat sit amet neque aliquet, sit amet consectetur
-          est cursus. Maecenas bibendum purus at sodales maximus.
-        </p>
+        <p class="home_contentText" v-html="$store.getters.getSiteDescription" />
 
         <router-link to="/join"
                      class="button__banner"
@@ -94,7 +86,7 @@ export default {
           const dX = (X / window.innerWidth * 30) * (1 + i / 6);
           const dY = (Y / window.innerHeight * 30) * (1 + i / 6);
           
-          current.style.transform = 'translate('+(parseInt(current.getAttribute('X')) - dX)+'px, '+(parseInt(current.getAttribute('Y')) - dY)+'px)';
+          if (current) current.style.transform = 'translate('+(parseInt(current.getAttribute('X')) - dX)+'px, '+(parseInt(current.getAttribute('Y')) - dY)+'px)';
         });
       }
       else {

@@ -1,6 +1,6 @@
 <template>
     <div class="news-block">
-        <router-link :to="newsItem.link"
+        <router-link :to="newsItem.link ? newsItem.link : '/'"
                      class="news-block_item"
                      v-for="(newsItem, index) in news"
                      :key="index">
@@ -12,11 +12,13 @@
                  :alt="newsItem.title"
                  class="news-block_itemImage" />
             <div class="news-block_itemDate">
-                {{(new Date(newsItem.date)).toLocaleDateString()}}
+                {{newsItem.date ? (new Date(newsItem.date)).toLocaleDateString() : '__.__.____'}}
             </div>
-            <h2 class="news-block_itemText">
-                {{newsItem.title}}
-            </h2>
+            <div class="news-block_itemText-wrapper">
+                <h2 class="news-block_itemText">
+                    {{newsItem.title}}
+                </h2>
+            </div>
         </router-link>
     </div>
 </template>
@@ -28,61 +30,64 @@ export default {
         return {
             news: [
                 {
-                    title: 'Заголовок новости Заголовок новости Заголовок новости Заголовок новости Заголовок новости Заголовок новости Заголовок новости Заголовок новости',
-                    date: '2020-05-01',
+                    title: '',
+                    date: '',
                     img: null,
-                    link: '/news/1'
+                    link: false
                 },
                 {
-                    title: 'Заголовок новости',
-                    date: '2020-05-01',
+                    title: '',
+                    date: '',
                     img: null,
-                    link: '/news/1'
+                    link: false
                 },
                 {
-                    title: 'Заголовок новости',
-                    date: '2020-05-01',
+                    title: '',
+                    date: '',
                     img: null,
-                    link: '/news/1'
+                    link: false
                 },
-                {
-                    title: 'Заголовок новости',
-                    date: '2020-05-01',
-                    img: null,
-                    link: '/news/1'
-                },
-                {
-                    title: 'Заголовок новости',
-                    date: '2020-05-01',
-                    img: null,
-                    link: '/news/1'
-                },
-                {
-                    title: 'Заголовок новости',
-                    date: '2020-05-01',
-                    img: null,
-                    link: '/news/1'
-                },
-                {
-                    title: 'Заголовок новости',
-                    date: '2020-05-01',
-                    img: null,
-                    link: '/news/1'
-                },
-                {
-                    title: 'Заголовок новости',
-                    date: '2020-05-01',
-                    img: null,
-                    link: '/news/1'
-                },
-                {
-                    title: 'Заголовок новости',
-                    date: '2020-05-01',
-                    img: null,
-                    link: '/news/1'
-                }
             ]
         }
+    },
+    methods: {
+        loadPost() {
+            global.sendRequest({
+                url: 'wp/v2/posts?categories=1',
+                resolve: resp => {
+                    let tmpPosts = [];
+                    resp.forEach(async (post, index) => {
+                        await global.sendRequest({
+                            url: post._links['wp:featuredmedia'][0].href,
+                            resolve: (imgData) => {
+                                tmpPosts.push({
+                                    title: post.title.rendered,
+                                    date: post.date,
+                                    img: imgData.guid.rendered,
+                                    link: '/news/'+post.id
+                                });
+
+                                if (index == resp.length - 1) {
+                    
+                                    tmpPosts.sort((a, b) => {
+                                        a = (new Date(a.date)).getTime();
+                                        b = (new Date(b.date)).getTime()
+                                        return a < b ?
+                                            (a == b ? 0 : 1) :
+                                            -1;
+                                    });
+                                    this.news = tmpPosts;
+                                }
+                            }
+                        });
+                    });
+                }
+            });
+        }
+    },
+
+    created () {
+        this.loadPost();
     }
 }
 </script>

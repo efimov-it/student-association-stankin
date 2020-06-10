@@ -2,11 +2,15 @@
 
     &_topContainer {
         position: relative;
-        height: 80vh;
+        min-height: 80vh;
         display: flex;
         align-items: center;
-        justify-content: space-between;
+        justify-content: space-evenly;
         margin-bottom: 200px;
+        
+        @media (min-width: 1000px) {
+            padding-top: 60px;
+        }
         
         @media (max-width: 1000px) {
             height: auto;
