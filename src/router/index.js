@@ -1,7 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import Home from '../views/Home.vue'
-import WPPage from '../components/wp-page.vue'
+import Home from '../views/home/'
+import NewsList from '../views/news-list/';
+import WPPage from '../components/wp/page/'
 import WPNews from '../views/news.vue'
 
 Vue.use(VueRouter)
@@ -18,9 +19,19 @@ Vue.use(VueRouter)
     component: WPPage
   },
   {
+    path: '/news/',
+    name: 'NewsList',
+    component: NewsList
+  },
+  {
     path: '/news/:id',
     name: 'WPNews',
     component: WPNews
+  },
+  {
+    path: '/category/:id',
+    name: 'CategoryList',
+    component: NewsList
   }
 ];
 

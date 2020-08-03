@@ -11,7 +11,8 @@
 
         <router-link to="/join"
                      class="button__banner"
-                     title='Подать заявку на вступление в ассоциацию выпускников МГТУ "Станкин"'>
+                     title='Подать заявку на вступление в ассоциацию выпускников МГТУ "Станкин"'
+                     v-if="false">
           Вступить в ассоциацию
         </router-link>
       </div>
@@ -35,7 +36,7 @@
              Y="350" />
 
         <img class="home_bannerImage"
-             src="../assets/img/main-page-banner.jpg"
+             src="../../assets/img/main-page-banner.jpg"
              alt="Баннер" />
 
         <div class="home_bannerParticle"
@@ -57,13 +58,18 @@
 
     <h2 class="content-title home_newsHeader">Новости и события</h2>
     <News />
+    <router-link to="/news"
+                  class="button__banner"
+                  title='Перейти на страницу с новостями'>
+      Перейти к списку новостей
+    </router-link>
   </div>
 </template>
 
 <script>
-import '../scss/home.scss'
+import './home.scss'
 
-import News from '../components/news-block';
+import News from '@/components/news/';
 export default {
   components: {
     News

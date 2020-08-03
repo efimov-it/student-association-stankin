@@ -29,6 +29,31 @@ export default {
                                         menuOrder: menuItem.menu_order,
                                         link: menuItem.content.rendered != "" ? "/page/"+menuItem.id: null
                                     };
+
+                                    if (menuItem.title.rendered.toLowerCase().indexOf('новост') != -1) {
+                                        global.sendRequest({
+                                            url: 'wp/v2/categories',
+                                            resolve (categories) {
+                                                categories.forEach( category => {
+                                                    if (category.parent == 0) {
+                                                        if (category.name == "Uncategorized") {
+                                                            newMenuItems[menuItem.id].childrens.push({
+                                                                link: '/news/', 
+                                                                title: 'Новости ассоциации'
+                                                            });
+                                                        }
+                                                        else {
+                                                            newMenuItems[menuItem.id].childrens.push({
+                                                                id: category.id,
+                                                                link: '/category/' + category.id,
+                                                                title: category.name
+                                                            });
+                                                        }
+                                                    }
+                                                });
+                                            }
+                                        })
+                                    }
                                 }
                             });
                         }
@@ -50,11 +75,9 @@ export default {
                                 }];
                             }
                         }
-
+                        
                         if( index == resp.length - 1) {
-                            setTimeout(()=> {
-                                commit('addMenuItems', newMenuItems);
-                            }, 2000);
+                            commit('addMenuItems', newMenuItems);
                         }
                     });
                 }

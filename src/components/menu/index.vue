@@ -61,7 +61,8 @@
                            :key="index"
                            :to="menuSubItem.link"
                            :name="menuSubItem.title"
-                           @click.native="close()"
+                           @click.native="close();
+                                          $store.commit('setCurentCategory', (menuSubItem.link.indexOf('category') >= 0 ? menuSubItem.title : null))"
                            class="menu_sub-menu-link">
                 {{menuSubItem.title}}
               </router-link>
@@ -70,7 +71,8 @@
         </div>
 
         <footer class="menu_footer">
-          <div class="menu_socialLinks">
+          <div class="menu_socialLinks"
+               v-if="false">
             <a class="icon icon-telegram button_hoverEffect"
                href="https://t.me"
                target="_blank"
@@ -118,6 +120,7 @@
 </template>
 
 <script>
+import './menu.scss';
 import ScrollBar from 'vue-custom-scrollbar';
 export default {
     components: {

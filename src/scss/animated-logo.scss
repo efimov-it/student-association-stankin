@@ -1,0 +1,129 @@
+.a-logo {
+    position: absolute;
+    display: flex;
+    top: -30px;
+
+    &_wrapper {
+        position: relative;
+        overflow: hidden;
+        width: 150px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        transition: opacity .5s;
+        opacity: 0;
+    }
+
+    &_organisation {
+        font-size: 21px;
+        letter-spacing: .5px;
+        text-align: right;
+        font-weight: 500;
+        line-height: 20px;
+        position: absolute;
+        width: 150px;
+        margin-left: 150px;
+        transition: 1s ease-in-out;
+    }
+
+    &_university {
+        position: absolute;
+        width: 150px;
+        margin-left: -150px;
+        transition: 1s ease-in-out;
+    }
+
+    &_separator {
+        width: 2px;
+        height: 50px;
+        background-color: #484848;
+        position: absolute;
+        transition: .5s ease-in-out;
+
+        &-a {
+            transform: rotate(45deg);
+        }
+
+        &-b {
+            transform: rotate(-45deg);
+        }
+
+        &-wrapper {
+            position: relative;
+            margin: 0px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: separatot-rotation 2s linear infinite;
+
+            @keyframes separatot-rotation {
+                0% {
+                    opacity: 0;
+                }
+                100% {
+                    opacity: 1;
+                }
+            }
+        }
+    }
+
+
+    &_loaded {
+        .a-logo {
+            &_organisation {
+                margin-left: 0px;
+            }
+            &_university {
+                margin-left: 0px;
+            }
+            &_wrapper {
+                opacity: 1;
+            }
+            &_separator {
+                &-a {
+                    transform: rotate(0deg);
+                }
+                &-b {
+                    transform: rotate(0deg);
+                }
+
+                &-wrapper {
+                    margin: 0px 20px;
+                    animation: none;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 790px) {
+        &_organisation {
+            font-size: 14px;
+            margin-left: 110px;
+        }
+        &_university {
+            margin-left: -110px;
+            width: 110px;
+        }
+        &_separator {
+            width: 1px;
+        }
+    }
+
+    @media (max-width: 490px) {
+        top: -25px;
+
+        &_organisation {
+            font-size: 3vw;
+            line-height: 4vw;
+            margin-left: 25vw;
+        }
+        &_university {
+            margin-left: -25vw;
+            width: 25vw !important;
+        }
+        &_separator {
+            height: 12vw;
+        }
+
+    }
+}

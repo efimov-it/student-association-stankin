@@ -10,8 +10,28 @@
                    to="/"
                    name="На главную"
                    title="На главную">
+        <div :class="'a-logo' + ($store.getters.getSiteDataReadyState ? ' a-logo_loaded' : '')"
+             v-if="showAnimatedLogo">
+          <div class="a-logo_wrapper">
+            <div class="a-logo_organisation">
+              Ассоциация<br />выпускников
+            </div>
+          </div>
+
+          <div class="a-logo_separator-wrapper">
+            <div class="a-logo_separator a-logo_separator-a" />
+            <div class="a-logo_separator a-logo_separator-b" />
+          </div>
+          
+          <div class="a-logo_wrapper">
+            <img class="a-logo_university"
+                 src="./assets/a-logo150.png"
+                 alt="Логотип" />
+          </div>
+        </div>
         <img src="./assets/logo100.png"
-             alt="Логотип" />
+             alt="Логотип"
+             v-else />
       </router-link>
 
       <a class="link header_link"
@@ -50,7 +70,8 @@
 </template>
 
 <script>
-import Menu from './components/menu';
+import './scss/animated-logo.scss';
+import Menu from './components/menu/';
 export default {
   components: {
     Menu
@@ -59,7 +80,8 @@ export default {
     return {
       loadingShown: true,
       menuState: false,
-      lastUrl: window.location.href
+      lastUrl: window.location.href,
+      showAnimatedLogo: true
     }
   },
 

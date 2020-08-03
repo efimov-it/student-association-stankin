@@ -7,7 +7,6 @@ import store from './store'
 
 import './scss/fonts.css'
 import './scss/main.scss'
-import './scss/menu.scss'
 import './scss/wp.scss'
 
 Vue.config.productionTip = false
