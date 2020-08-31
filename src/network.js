@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const baseUrl = process.env.NODE_ENV == 'production' ?
                 '/wp-json/' :
-                'http://alumni.stankin.ru/wp-json/';
+                'https://alumni.stankin.ru/wp-json/';
 
 global.sendRequest = async ({
     url,
